@@ -36,7 +36,7 @@ def main():
     model.eval()
     
     # Directory containing test images
-    pred_dir = "data/pred"
+    pred_dir = "data/seg_pred/seg_pred"
     
     # Get class names from training data structure
     class_names = ["buildings", "forest", "glacier", "mountain", "sea", "street"]
