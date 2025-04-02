@@ -56,4 +56,59 @@ After the VGG16 model is loaded, we modify the 3 fully connected layers by addin
 - Layer 2: this is a linear layer that takes 4096 input features and outputs 1024 features. It is followed by a ReLU activation function and a dropout layer.
 - Layer 3: this is a linear layer that takes 1024 input features and outputs the 6 classes.
 
-This is a multi-level classification task, so the loss function was appropriately selected to be Cross Entropy. Additionally, the optimizer used stochastic gradient descent (SGD) with a learning rate of 0.001, a momentum of 0.9, and a weight decay of $10^-4$.
+This is a multi-level classification task, so the loss function was appropriately selected to be Cross Entropy. Additionally, the optimizer used stochastic gradient descent (SGD) with a learning rate of 0.001, a momentum of 0.9, and a weight decay of $10^{-4}$. On top of that, a learning rate scheduler is built into the training script to scale the learning rate by 0.1 every 5 epochs.
+
+## Evaluation
+
+Even though the prediction set was used for the Streamlit demo, it was unlabeled, so we do not have the ground truth when analyzing that data. Instead, the model performance was evaluated on the validation set. This is a valid decision, as the validation set is well-generalized from the provided testing data. Therefore, we can assume that the model would perform similarly across the validation set and the testing set.
+
+After training the CNN and using it to make predictions on the validation set, the following confusion matrix was generated to characterize the performance on the multi-level classification task.
+
+![confusion_matrix](https://github.com/user-attachments/assets/508f5522-e7a1-40b0-b9ed-05865b0e3528)
+
+From this matrix, we may calculate the following metrics for each class:
+- **Buildings**
+  - Number of Samples = 437
+  - Accuracy = 92.22%
+  - Precision = 94.60%
+  - Recall = 92.22%
+  - F1 Score = 93.40%
+- **Forest**
+  - Number of Samples = 474
+  - Accuracy = 99.16%
+  - Precision = 99.16%
+  - Recall = 99.16%
+  - F1 Score = 99.16%
+- **Glacier**
+  - Number of Samples = 553
+  - Accuracy = 87.88%
+  - Precision = 91.18%
+  - Recall = 87.88%
+  - F1 Score = 89.50%
+- **Mountain**
+  - Number of Samples = 525
+  - Accuracy = 89.71%
+  - Precision = 89.54%
+  - Recall = 89.71%
+  - F1 Score = 89.63%
+- **Sea**
+  - Number of Samples = 510
+  - Accuracy = 98.63%
+  - Precision = 94.55%
+  - Recall = 98.63%
+  - F1 Score = 96.55%
+- **Street**
+  - Number of Samples = 501
+  - Accuracy = 95.01%
+  - Precision = 93.52%
+  - Recall = 95.01%
+  - F1 Score = 94.26%
+ 
+We may also compute the metrics that characterize the overall performance of the model:
+- **Total Number of Samples** = 3000
+- **Overall Accuracy** = 93.63%
+- **Weighted Average Precision** = 93.62%
+- **Weighted Average Recall** = 93.63%
+- **Weighted Average F1 Score** = 93.61%
+
+No official benchmark was provided by the Kaggle dataset; however, numerous users have uploaded code to demonstrate the performance of PyTorch-based deep learning approaches. One user uploaded a PyTorch-based CNN that was not powered by a separate pre-trained model, and they yielded 91.47% accuracy over the validation set from the Intel dataset (https://www.kaggle.com/code/ihalil95/98-train-92-test-accuracy-intelimgs-pytorch). Our model yielded improved accuracy compared to this CNN, which demonstrates the power of relying on a pre-trained VGG16 model. However, other users experienced more success with other pre-trained models, such as a particular ResNet-based network that performed with 93.7% overall accuracy (https://www.kaggle.com/code/payamamanat/pytorch-94-pretrainedresnet50). So, while our CNN with a pre-trained VGG16 model performs well, there is clearly room for improvement.
