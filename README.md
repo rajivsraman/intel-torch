@@ -37,4 +37,21 @@ It is worth noting that there are no ground truth labels provided for the testin
 
 The Streamlit demo (https://inteltorchdemo.streamlit.app/) can be accessed here, but it only operates based on the model that I personally trained. If you are interested in training the model or computing predictions yourself, you will need to follow these instructions.
 
-1. Clone this repository into your local machine via Terminal or Command Prompt:
+1. Navigate to the directory where you want to store your code.
+2. Clone this repository into your local machine via Terminal or Command Prompt: `git clone https://github.com/rajivsraman/intel-torch.git`
+3. Install the requirements for the project: `pip install -r requirements.txt`
+4. Delete the seg_pred folder found inside the data folder.
+5. Download the Intel Image Classification dataset from Kaggle: https://www.kaggle.com/datasets/puneet6060/intel-image-classification/data.
+6. Extract the three folders (seg_pred, seg_test, and seg_train) and move them into the data folder for this project.
+7. [Optional] Download my trained CNN from Hugging Face (https://huggingface.co/rajivsraman4/inteltorch/tree/main) and add it to your project folder.
+
+Now, you are set up to run any of the scripts. However, if you choose to skip Step 7, then you will need to train the model yourself. You can accomplish this by running **trainmodel.py**.
+
+## Model
+
+We start by loading a VGG16 model, which is a classic deep CNN with 13 convolutional layers, 3 fully connected layers, and 16 weight layers in its architecture. This model is pre-trained on ImageNet (a large dataset of images), and although it is known for its deep architecture, it does not contain extra features like residual connections or attention mechanisms. Despite that, it is still extremely powerful, boasting over 130 million parameters.
+
+After the VGG16 model is loaded, we modify the 3 fully connected layers by adding a custom classifier for the 6 classes in the dataset.
+- Layer 1: this is a linear layer that takes 25,088 input features and outputs 4096 features. It is followed by a ReLU activation function and a dropout layer.
+- Layer 2: this is a linear layer that takes 4096 input features and outputs 1024 features. It is followed by a ReLU activation function and a dropout layer.
+- Layer 3: this is a linear layer that takes 1024 input features and outputs the 6 classes.
