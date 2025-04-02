@@ -37,7 +37,7 @@ def create_slideshow():
         predicted_class = random_row['Predicted Class']
         
         # Load and display image
-        image_path = os.path.join('data/pred', filename)
+        image_path = os.path.join('data/seg_pred/seg_pred', filename)
         try:
             image = Image.open(image_path)
             image_placeholder.image(image, caption=filename)
