@@ -1,7 +1,7 @@
 # AIPI 590 (Applied Computer Vision) - Project 1
-## Author: Rajiv Raman
-## Institution: Duke University
-## Date: April 1st, 2025
+### Author: Rajiv Raman
+### Institution: Duke University
+### Date: April 1st, 2025
 
 
 
