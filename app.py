@@ -8,40 +8,13 @@ import torch
 from huggingface_hub import hf_hub_download
 from trainmodel import create_model
 
-@st.cache_resource
-def load_model_from_hub():
-    # Access the token from secrets
-    token = st.secrets["HUGGINGFACE_TOKEN"]
-    
-    # Create the model
-    model = create_model(num_classes=6)
-    
-    # Download the model using the token
-    model_path = hf_hub_download(
-        repo_id="YOUR_USERNAME/YOUR_REPO_NAME",
-        filename="best_model.pth",
-        token=token
-    )
-    
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
-    model.eval()
-    return model
-
 def load_predictions():
     # Read the CSV file with predictions
     return pd.read_csv('predictions.csv')
 
 def create_slideshow():
-    st.title("Random Image Prediction Slideshow")
-    
-    try:
-        # Load model from Hugging Face
-        model = load_model_from_hub()
-        st.success("Model loaded successfully!")
-    except Exception as e:
-        st.error(f"Error loading model: {str(e)}")
-        return
-    
+    st.title("Random Scene Prediction Demo")
+
     # Load predictions
     predictions_df = load_predictions()
     
