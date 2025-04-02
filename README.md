@@ -55,3 +55,5 @@ After the VGG16 model is loaded, we modify the 3 fully connected layers by addin
 - Layer 1: this is a linear layer that takes 25,088 input features and outputs 4096 features. It is followed by a ReLU activation function and a dropout layer.
 - Layer 2: this is a linear layer that takes 4096 input features and outputs 1024 features. It is followed by a ReLU activation function and a dropout layer.
 - Layer 3: this is a linear layer that takes 1024 input features and outputs the 6 classes.
+
+This is a multi-level classification task, so the loss function was appropriately selected to be Cross Entropy. Additionally, the optimizer used stochastic gradient descent (SGD) with a learning rate of 0.001, a momentum of 0.9, and a weight decay of $10^-4$.
